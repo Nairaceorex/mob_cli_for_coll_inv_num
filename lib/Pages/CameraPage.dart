@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CameraPage extends StatefulWidget{
@@ -16,10 +18,32 @@ class _CameraPageState extends State<CameraPage>{
   File? _image;
 
   Future _openCamera(ImageSource source) async{
+
     final ImagePicker _picker = ImagePicker();
+    final ImageCropper _cropper = ImageCropper();
+
     var image = await _picker.pickImage(source: source);
+
+    File? croppedFile = await _cropper.cropImage(
+      sourcePath: image!.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+    );
+
+    File? result = await FlutterImageCompress.compressAndGetFile(
+      croppedFile!.path,
+      croppedFile.path,
+      quality: 50,
+      //rotate: 180,
+    );
+
     setState((){
-      _image = File(image!.path);
+      _image = File(result!.path);
     });
   }
 
