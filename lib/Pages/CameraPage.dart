@@ -35,15 +35,15 @@ class _CameraPageState extends State<CameraPage>{
       ],
     );
 
-    File? result = await FlutterImageCompress.compressAndGetFile(
+    /*File? result = await FlutterImageCompress.compressAndGetFile(
       croppedFile!.path,
       croppedFile.path,
       quality: 50,
       //rotate: 180,
-    );
+    );*/
 
     setState((){
-      _image = File(result!.path);
+      _image = File(croppedFile!.path);
     });
   }
 
@@ -56,8 +56,8 @@ class _CameraPageState extends State<CameraPage>{
             ? Text('Image')
             : Image.file(
           _image!,
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
         ),
       ),
         floatingActionButton: Row(
