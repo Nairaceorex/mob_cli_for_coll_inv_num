@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -26,25 +27,38 @@ class _CameraPageState extends State<CameraPage>{
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: [
-            Center(
-              child: _image == null
-                  ? Text('Image')
-                  : Image.file(
-                      _image!,
-                      height: 400,
-                      width: 400,
-              ),
-            ),
-            ElevatedButton(
-                onPressed: () => _openCamera(ImageSource.camera),
-                child: Text('Camera'))
-          ],
+      body: Center(
+        child: _image == null
+            ? Text('Image')
+            : Image.file(
+          _image!,
+          height: 400,
+          width: 400,
         ),
       ),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            FloatingActionButton.extended(
+                onPressed: () => _openCamera(ImageSource.camera),
+                heroTag: UniqueKey(),
+                label: Text('Camera'),
+                icon: Icon(Icons.camera),
 
-    );
+            ),
+
+          ],
+        ),
+        /*Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            ElevatedButton(
+                onPressed: () => _openCamera(ImageSource.camera),
+                child: Text('Camera')),
+          ],
+        ),*/
+      );
+
+
   }
 }
