@@ -24,6 +24,14 @@ class _CameraPageState extends State<CameraPage>{
 
     var image = await _picker.pickImage(source: source);
 
+    AndroidUiSettings androidUiSettingsLocked() => AndroidUiSettings(
+      toolbarTitle: 'Crop Image',
+      toolbarColor: Colors.red,
+      toolbarWidgetColor: Colors.white,
+      initAspectRatio: CropAspectRatioPreset.original,
+      lockAspectRatio: false,
+    );
+
     File? croppedFile = await _cropper.cropImage(
       sourcePath: image!.path,
       aspectRatioPresets: [
@@ -33,7 +41,10 @@ class _CameraPageState extends State<CameraPage>{
         CropAspectRatioPreset.ratio4x3,
         CropAspectRatioPreset.ratio16x9
       ],
+      androidUiSettings: androidUiSettingsLocked(),
     );
+
+
 
     /*File? result = await FlutterImageCompress.compressAndGetFile(
       croppedFile!.path,
@@ -70,6 +81,14 @@ class _CameraPageState extends State<CameraPage>{
                 icon: Icon(Icons.camera),
 
             ),
+            FloatingActionButton.extended(
+              onPressed: () => _openCamera(ImageSource.gallery),
+              heroTag: UniqueKey(),
+              label: Text('Gallery'),
+              icon: Icon(Icons.image),
+
+            ),
+
 
           ],
         ),
