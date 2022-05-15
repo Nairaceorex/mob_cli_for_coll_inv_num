@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mob_cli_for_coll_inv_num">
    <application
-        android:label="mob_cli_for_coll_inv_num"
+        android:label="INV"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
