@@ -14,8 +14,8 @@ class CustomBottomNav extends StatelessWidget {
       onTap: callback,
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Главная',
+          icon: Icon(Icons.account_circle),
+          label: 'Профиль',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.camera_alt),

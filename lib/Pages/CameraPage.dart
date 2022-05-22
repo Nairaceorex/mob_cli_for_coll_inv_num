@@ -26,7 +26,7 @@ class _CameraPageState extends State<CameraPage>{
 
     AndroidUiSettings androidUiSettingsLocked() => AndroidUiSettings(
       toolbarTitle: 'Crop Image',
-      toolbarColor: Colors.red,
+      toolbarColor: Colors.blue,
       toolbarWidgetColor: Colors.white,
       initAspectRatio: CropAspectRatioPreset.original,
       lockAspectRatio: false,
@@ -80,6 +80,9 @@ class _CameraPageState extends State<CameraPage>{
                 label: Text('Camera'),
                 icon: Icon(Icons.camera),
 
+            ),
+            SizedBox(
+              width: 10,
             ),
             FloatingActionButton.extended(
               onPressed: () => _openCamera(ImageSource.gallery),

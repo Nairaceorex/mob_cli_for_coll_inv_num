@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:mob_cli_for_coll_inv_num/Widgets/Companies_List.dart';
 
 class ReportPage extends StatefulWidget{
   ReportPage({Key? key}) : super (key: key);
@@ -20,6 +21,7 @@ class _ReportPageState extends State<ReportPage>{
               child: Column(
                 children: <Widget>[
                   Text('Отчет'),
+                  Companies_List()
                 ],
               ),
             ),
