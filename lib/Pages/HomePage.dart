@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage>{
                                   width: innerWidth,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blue,
+                                    color: Colors.deepPurpleAccent,
                                   ),
                                   child: Column(
                                     children: [
@@ -120,7 +120,22 @@ class _HomePageState extends State<HomePage>{
                                   ),
                                 )
                             ),
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              child: Center(
+                                child: Container(
+                                  child: Image.asset(
+                                      'assets/logo/inventory.png',
+                                    width: innerWidth*0.4,
 
+                                    fit: BoxFit.fitWidth,
+                                  ),
+
+                                ),
+                              ),
+                            )
                           ],
                         );
                       },
@@ -132,9 +147,10 @@ class _HomePageState extends State<HomePage>{
                   Container(
                     height: height*0.5,
                     width: width*0.95,
+
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Colors.blue,
+                      color: Colors.deepPurpleAccent,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -156,9 +172,26 @@ class _HomePageState extends State<HomePage>{
                           ),
                           Container(
                             height: height*0.15,
+                            width: width,
                             decoration: BoxDecoration(
-                              color: Colors.indigo,
+                              color: Colors.deepPurple,
                               borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    user.email,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Nunito',
+                                        fontSize: 23
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -177,9 +210,26 @@ class _HomePageState extends State<HomePage>{
                           ),
                           Container(
                             height: height*0.15,
+                            width: width,
                             decoration: BoxDecoration(
-                              color: Colors.indigo,
+                              color: Colors.deepPurple,
                               borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    user.company,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Nunito',
+                                        fontSize: 23
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

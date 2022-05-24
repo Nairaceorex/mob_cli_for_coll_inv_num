@@ -26,8 +26,9 @@ class _CameraPageState extends State<CameraPage>{
 
     AndroidUiSettings androidUiSettingsLocked() => AndroidUiSettings(
       toolbarTitle: 'Crop Image',
-      toolbarColor: Colors.blue,
+      toolbarColor: Colors.deepPurpleAccent,
       toolbarWidgetColor: Colors.white,
+      activeControlsWidgetColor: Colors.deepPurpleAccent,
       initAspectRatio: CropAspectRatioPreset.original,
       lockAspectRatio: false,
     );
