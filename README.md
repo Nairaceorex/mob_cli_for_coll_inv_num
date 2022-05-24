@@ -15,3 +15,20 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 "# mob_cli_for_coll_inv_num" 
+
+## Splash Screen
+
+![image](https://user-images.githubusercontent.com/63120787/169999513-d7cdb8ae-71d3-494c-844b-dbf54096c909.png)
+
+
+## Profile
+
+![image](https://user-images.githubusercontent.com/63120787/169998940-fd8c3d11-3d93-4c5c-91ff-2c2dfa771c25.png)
+
+## Camera
+
+![image](https://user-images.githubusercontent.com/63120787/169999106-5fc1a909-4e1c-4b9c-b499-946b7ff1095a.png)
+
+## Crop
+
+![image](https://user-images.githubusercontent.com/63120787/169999260-437242f2-bd55-4829-9f4c-c7c930e4be1e.png)
