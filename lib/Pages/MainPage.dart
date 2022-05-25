@@ -25,6 +25,7 @@ class MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("INV"),
+        automaticallyImplyLeading: false,
         actions: <Widget>[
           IconButton(
               onPressed: (){

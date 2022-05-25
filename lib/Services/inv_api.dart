@@ -8,7 +8,7 @@ class InvApi {
   String password = '';
   bool debug = false;
 
-  String url_api = 'https://inventory-mp41-18.herokuapp.com/api/';
+  String url_api = 'http://192.168.1.53:5000/api/';
   String url_server = 'http://192.168.1.65:5000/';
 //https://inventory-mp41-18.herokuapp.com/api/get_companies
 
@@ -33,18 +33,18 @@ class InvApi {
     return result;
   }
 
-  Future<int> login(String nickname, String password) async {
+  Future<int> login(String email, String password) async {
     int result = 0;
-    Uri url = Uri.parse(url_api + 'log');
+    Uri url = Uri.parse(url_api + 'auth');
     var response = await http.post(
       url,
-      body: json.encode({'fullname': nickname, 'password': password}),
+      body: json.encode({'email': email, 'password': password}),
     );
     var result_json = json.decode(response.body);
     if (response.statusCode == 200) {
       result = result_json['code'];
       if (result == 0) {
-        this.nickname = nickname;
+        this.nickname = email;
         this.password = password;
       }
     } else {

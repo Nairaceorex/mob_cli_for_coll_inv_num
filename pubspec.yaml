@@ -31,8 +31,11 @@ dependencies:
     sdk: flutter
   image_picker: any
   image_cropper: any
-  flutter_image_compress: any
+  #flutter_image_compress: any
   http: any
+  provider: any
+
+  fluttertoast: ^8.0.9
   #flutter_launcher_icons: any
 
 

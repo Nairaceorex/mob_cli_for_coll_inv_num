@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
+
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -47,12 +47,6 @@ class _CameraPageState extends State<CameraPage>{
 
 
 
-    /*File? result = await FlutterImageCompress.compressAndGetFile(
-      croppedFile!.path,
-      croppedFile.path,
-      quality: 50,
-      //rotate: 180,
-    );*/
 
     setState((){
       _image = File(croppedFile!.path);

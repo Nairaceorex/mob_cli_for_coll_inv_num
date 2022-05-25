@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mob_cli_for_coll_inv_num/Pages/LandingPage.dart';
+import 'package:mob_cli_for_coll_inv_num/Pages/MainPage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mob_cli_for_coll_inv_num/screnns/globals.dart' as globals;
+
 import 'package:mob_cli_for_coll_inv_num/Services/inv_api.dart';
 
 class RegPage extends StatefulWidget {
@@ -140,40 +145,18 @@ class _RegPageState extends State<RegPage> {
                   ],
                 )
             ),
-            /*Padding(
-              padding: EdgeInsets.only(bottom: 20, top: 10),
-              child: _input(Icon(Icons.email),"EMAIL", _emailController,false),
-              //child: Text("Email"),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: _input(Icon(Icons.lock),"PASSWORD", _passwordController,true),
-              //child: Text("Password"),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: _input(Icon(Icons.lock),"Name", _nicknameController,false),
-              //child: Text("Password"),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: _input(Icon(Icons.lock),"Company", _companyController,false),
-              //child: Text("Password"),
-            ),
 
-            SizedBox(height: 20,),
-
-            Padding(
-              padding: EdgeInsets.only(
-                  left: 20, right: 20
-              ),
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                child: _button(label,func),
-              ),
-            )*/
           ],
+        ),
+      );
+    }
+
+    void switchLanding(BuildContext ctx) {
+      Navigator.of(ctx).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return LandindPage(true);
+          },
         ),
       );
     }
@@ -186,11 +169,40 @@ class _RegPageState extends State<RegPage> {
 
       if (_email!.isEmpty || _password!.isEmpty || _company!.isEmpty || _nickname!.isEmpty) return;
 
-      //Users? user = await _authService.registerWithEmailPassword(_email!.trim(), _password!.trim());
+
       InvApi api = InvApi();
       int res = await api.reg(_email!, _nickname!, _password!, 0);
+
       if (res == 0) {
         print('Поздравляем Вы успешно прошли регистрацию');
+        switchLanding(context);
+
+
+        /*Fluttertoast.showToast(
+            msg: "Вы успешно прошли регистрацию",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );*/
+
+        /*InvApi api_auth = InvApi();
+        int res_auth = await api_auth.login(_email!, _password!);*/
+
+        /*if (res_auth == 0){
+          print('Поздравляем Вы успешно прошли авторизацию');
+          /*Fluttertoast.showToast(
+              msg: "Вы успешно прошли авторизацию",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 16.0
+          );*/
+        }*/
       }
       if (res == 1) {
         print('Неизвестная ошибка');
@@ -207,21 +219,13 @@ class _RegPageState extends State<RegPage> {
       else{
         print('Ошибка');
       }
-      /*if(user == null){
-        Fluttertoast.showToast(
-            msg: "Регистрация не удалась",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0
-        );
+      if(res == 0){
+
       }
       else{
         _emailController.clear();
         _passwordController.clear();
-      }*/
+      }
     }
 
     void _loginButtonAction() async{
@@ -231,24 +235,23 @@ class _RegPageState extends State<RegPage> {
       if (_email!.isEmpty || _password!.isEmpty) return;
 
       //Users? user = await _authService.signWithEmailPassword(_email!.trim(), _password!.trim());
-      InvApi api_log = InvApi();
-      int res = await api_log.login(_email!, _password!);
+      InvApi api_auth = InvApi();
+      int res_auth = await api_auth.login(_email!, _password!);
 
-      /*if(user == null){
+      if (res_auth == 0){
+        print('Поздравляем Вы успешно прошли авторизацию');
+        switchLanding(context);
+
         Fluttertoast.showToast(
-            msg: "Неверный логин или пароль!",
+            msg: "Вы успешно прошли авторизацию",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.green,
             textColor: Colors.white,
             fontSize: 16.0
         );
       }
-      else{
-        _emailController.clear();
-        _passwordController.clear();
-      }*/
     }
 
     Widget _logo(){
