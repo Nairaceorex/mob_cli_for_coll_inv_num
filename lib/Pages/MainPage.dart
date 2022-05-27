@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/CameraPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/HomePage.dart';
+import 'package:mob_cli_for_coll_inv_num/Pages/LandingPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/ReportPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Widgets/CustomButtomNavigation.dart';
 
@@ -21,6 +22,12 @@ class MainPageState extends State<MainPage> {
   Widget _myProfile = ReportPage();
 
   @override
+
+  void switchLanding(BuildContext ctx) {
+    Navigator.pushAndRemoveUntil(ctx,
+        MaterialPageRoute(builder: (_) => LandingPage(isLoggedIn: false)),(route)=>false);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +36,7 @@ class MainPageState extends State<MainPage> {
         actions: <Widget>[
           IconButton(
               onPressed: (){
-
+                switchLanding(context);
               },
               icon: Icon(
                 Icons.exit_to_app,

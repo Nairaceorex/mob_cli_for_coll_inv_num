@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/LandingPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/MainPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mob_cli_for_coll_inv_num/screnns/globals.dart' as globals;
-
 import 'package:mob_cli_for_coll_inv_num/Services/inv_api.dart';
 
 class RegPage extends StatefulWidget {
@@ -35,6 +33,8 @@ class _RegPageState extends State<RegPage> {
         child: TextField(
           controller: controller,
           obscureText: obscure,
+          cursorColor: Colors.white,
+
           style: TextStyle(fontSize: 20,color: Colors.white),
           decoration: InputDecoration(
               hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white30),
@@ -61,10 +61,6 @@ class _RegPageState extends State<RegPage> {
     Widget _button(String text, void func()){
       return ElevatedButton(
         onPressed: (){
-          // Переходим к новому маршруту
-          /*Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return MyHomePage();
-          }));*/
           func();
         },
         child: Text(text),
@@ -85,12 +81,12 @@ class _RegPageState extends State<RegPage> {
                     Padding(
                       padding: EdgeInsets.only(bottom: 20, top: 10),
                       child: _input(Icon(Icons.email),"EMAIL", _emailController,false),
-                      //child: Text("Email"),
+
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: _input(Icon(Icons.lock),"PASSWORD", _passwordController,true),
-                      //child: Text("Password"),
+
                     ),
 
                     SizedBox(height: 20,),
@@ -112,22 +108,22 @@ class _RegPageState extends State<RegPage> {
                     Padding(
                       padding: EdgeInsets.only(bottom: 20, top: 10),
                       child: _input(Icon(Icons.email),"EMAIL", _emailController,false),
-                      //child: Text("Email"),
+
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: _input(Icon(Icons.lock),"PASSWORD", _passwordController,true),
-                      //child: Text("Password"),
+
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: _input(Icon(Icons.lock),"Name", _nicknameController,false),
-                      //child: Text("Password"),
+
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: _input(Icon(Icons.lock),"Company", _companyController,false),
-                      //child: Text("Password"),
+
                     ),
 
                     SizedBox(height: 20,),
@@ -152,13 +148,9 @@ class _RegPageState extends State<RegPage> {
     }
 
     void switchLanding(BuildContext ctx) {
-      Navigator.of(ctx).push(
-        MaterialPageRoute(
-          builder: (_) {
-            return LandindPage(true);
-          },
-        ),
-      );
+      Navigator.pushAndRemoveUntil(ctx,
+          MaterialPageRoute(builder: (_) => LandingPage(isLoggedIn: true)),(route)=>false);
+
     }
 
     void _registerButtonAction() async{
@@ -175,34 +167,25 @@ class _RegPageState extends State<RegPage> {
 
       if (res == 0) {
         print('Поздравляем Вы успешно прошли регистрацию');
-        switchLanding(context);
 
+        InvApi api_auth = InvApi();
+        int res_auth = await api_auth.login(_email!, _password!);
 
-        /*Fluttertoast.showToast(
-            msg: "Вы успешно прошли регистрацию",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            fontSize: 16.0
-        );*/
-
-        /*InvApi api_auth = InvApi();
-        int res_auth = await api_auth.login(_email!, _password!);*/
-
-        /*if (res_auth == 0){
+        if (res_auth == 0){
           print('Поздравляем Вы успешно прошли авторизацию');
-          /*Fluttertoast.showToast(
-              msg: "Вы успешно прошли авторизацию",
+          Fluttertoast.showToast(
+              msg: "Вы успешно прошли регистрацию",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.green,
               textColor: Colors.white,
               fontSize: 16.0
-          );*/
-        }*/
+          );
+
+          switchLanding(context);
+
+        }
       }
       if (res == 1) {
         print('Неизвестная ошибка');
@@ -234,14 +217,12 @@ class _RegPageState extends State<RegPage> {
 
       if (_email!.isEmpty || _password!.isEmpty) return;
 
-      //Users? user = await _authService.signWithEmailPassword(_email!.trim(), _password!.trim());
+
       InvApi api_auth = InvApi();
       int res_auth = await api_auth.login(_email!, _password!);
 
       if (res_auth == 0){
         print('Поздравляем Вы успешно прошли авторизацию');
-        switchLanding(context);
-
         Fluttertoast.showToast(
             msg: "Вы успешно прошли авторизацию",
             toastLength: Toast.LENGTH_SHORT,
@@ -251,12 +232,12 @@ class _RegPageState extends State<RegPage> {
             textColor: Colors.white,
             fontSize: 16.0
         );
+        switchLanding(context);
       }
     }
 
     Widget _logo(){
       return Padding(
-
         padding: EdgeInsets.only(top:100),
         child: Container(
           child: Align(
@@ -277,50 +258,55 @@ class _RegPageState extends State<RegPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: Column(
-        children: <Widget>[
-          _logo(),
-          (
-              showLogin ? Column(
-                  children: <Widget>[
-                    _form("Login",_loginButtonAction),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: GestureDetector(
-                        child: Text("Register", style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                        onTap:(){
-                          setState((){
-                            showLogin = false;
+      body: ListView(
+        children: [
+          Column(
+            children: <Widget>[
+              _logo(),
+              (
+                  showLogin ? Column(
+                      children: <Widget>[
+                        _form("Login",_loginButtonAction),
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: GestureDetector(
+                            child: Text("Register", style: TextStyle(fontSize: 20, color: Colors.white),
+                            ),
+                            onTap:(){
+                              setState((){
+                                showLogin = false;
 
-                          });
-                        },
-                      ),
-                    )
-                  ]
-              )
-                  : Column(
-                  children: <Widget>[
-                    _form("Register",_registerButtonAction),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: GestureDetector(
-                        child: Text("Register?", style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                        onTap:(){
-                          setState((){
-                            showLogin = true;
-                          });
-                        },
-                      ),
-                    )
-                  ]
-              )
+                              });
+                            },
+                          ),
+                        )
+                      ]
+                  )
+                      : Column(
+                      children: <Widget>[
+                        _form("Register",_registerButtonAction),
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: GestureDetector(
+                            child: Text("Register?", style: TextStyle(fontSize: 20, color: Colors.white),
+                            ),
+                            onTap:(){
+                              setState((){
+                                showLogin = true;
+                              });
+                            },
+                          ),
+                        )
+                      ]
+                  )
+              ),
+
+
+            ],
           ),
-
-
         ],
       ),
+
     );
   }
 }

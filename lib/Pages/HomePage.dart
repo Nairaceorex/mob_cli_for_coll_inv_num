@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage>{
                     height: 25,
                   ),
                   Container(
-                    height: height*0.5,
+                    height: height*0.4,
                     width: width*0.95,
 
                     decoration: BoxDecoration(
@@ -171,7 +171,7 @@ class _HomePageState extends State<HomePage>{
                             thickness: 2.5,
                           ),
                           Container(
-                            height: height*0.15,
+                            height: height*0.10,
                             width: width,
                             decoration: BoxDecoration(
                               color: Colors.deepPurple,
@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage>{
                             thickness: 2.5,
                           ),
                           Container(
-                            height: height*0.15,
+                            height: height*0.10,
                             width: width,
                             decoration: BoxDecoration(
                               color: Colors.deepPurple,

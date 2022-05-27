@@ -90,14 +90,7 @@ class _CameraPageState extends State<CameraPage>{
 
           ],
         ),
-        /*Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            ElevatedButton(
-                onPressed: () => _openCamera(ImageSource.camera),
-                child: Text('Camera')),
-          ],
-        ),*/
+
       );
 
 
