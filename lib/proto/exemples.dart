@@ -5,6 +5,6 @@ class UserProf {
       id: 0,
       fullname: 'Ivan Novikov',
       email: 'qawk123@gmail.com',
-      confirm: true,
+      is_confirm: 1,
       company: 'TechInd');
 }

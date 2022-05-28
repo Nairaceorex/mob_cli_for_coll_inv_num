@@ -5,6 +5,7 @@ import 'package:mob_cli_for_coll_inv_num/Pages/LandingPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/ReportPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Widgets/CustomButtomNavigation.dart';
 
+
 class MainPage extends StatefulWidget {
   MainPage({Key? key}) : super(key: key);
 

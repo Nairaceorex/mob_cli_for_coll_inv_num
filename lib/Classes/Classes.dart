@@ -14,14 +14,23 @@ class User {
   final int id;
   final String fullname;
   final String email;
-  final bool confirm;
+  final int is_confirm;
   final String company;
 
   const User({
     required this.id,
     required this.fullname,
     required this.email,
-    required this.confirm,
+    required this.is_confirm,
     required this.company,
   });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return new User(
+        id: json['id'],
+        fullname: json['fullname'],
+        email: json['email'],
+        is_confirm: json['is_confirm'],
+        company: json['company']);
+  }
 }

@@ -117,12 +117,12 @@ class _RegPageState extends State<RegPage> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
-                      child: _input(Icon(Icons.lock),"Name", _nicknameController,false),
+                      child: _input(Icon(Icons.account_circle),"Name", _nicknameController,false),
 
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
-                      child: _input(Icon(Icons.lock),"Company", _companyController,false),
+                      child: _input(Icon(Icons.account_balance_sharp),"Company", _companyController,false),
 
                     ),
 
@@ -163,7 +163,7 @@ class _RegPageState extends State<RegPage> {
 
 
       InvApi api = InvApi();
-      int res = await api.reg(_email!, _nickname!, _password!, 0);
+      int res = await api.reg(_email!, _nickname!, _password!, 4);
 
       if (res == 0) {
         print('Поздравляем Вы успешно прошли регистрацию');
@@ -233,6 +233,21 @@ class _RegPageState extends State<RegPage> {
             fontSize: 16.0
         );
         switchLanding(context);
+      }
+      if (res_auth == 1) {
+        print('Неизвестная ошибка');
+      }
+      if (res_auth == 2) {
+        print('!!!!!!!!!!!!!!!!!!!!!!');
+      }
+      if (res_auth == 3) {
+        print('Аккаунт с таким псевдонимом уже существует');
+      }
+      if (res_auth == 4) {
+        print('Аккаунт с такой эл. почтой уже существует');
+      }
+      else{
+        print('Ошибка');
       }
     }
 

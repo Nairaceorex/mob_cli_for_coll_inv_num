@@ -22,7 +22,7 @@ class _CameraPageState extends State<CameraPage>{
     final ImagePicker _picker = ImagePicker();
     final ImageCropper _cropper = ImageCropper();
 
-    var image = await _picker.pickImage(source: source);
+    var image = await _picker.getImage(source: source);
 
     AndroidUiSettings androidUiSettingsLocked() => AndroidUiSettings(
       toolbarTitle: 'Crop Image',

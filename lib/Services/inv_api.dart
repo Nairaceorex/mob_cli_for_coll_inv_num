@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:mob_cli_for_coll_inv_num/Classes/Classes.dart';
+import 'package:flutter_session/flutter_session.dart';
 
 class InvApi {
   String nickname = '';
@@ -44,8 +45,8 @@ class InvApi {
     if (response.statusCode == 200) {
       result = result_json['code'];
       if (result == 0) {
-        this.nickname = email;
-        this.password = password;
+        await FlutterSession().set("email", email);
+        await FlutterSession().set("password", password);
       }
     } else {
       result = -1;
@@ -72,4 +73,23 @@ class InvApi {
     return result;
   }
 
+  Future<User> get_user() async {
+   var result;
+    Uri url = Uri.parse(url_api + 'get_user');
+    var response = await http.post(url, body: json
+        .encode({'password': await FlutterSession().get("password"), 'email': await FlutterSession().get("email")}),
+    );
+    if (response.statusCode == 200) {
+      var result_json = json.decode(response.body);
+      int code = result_json['code'];
+      if (code == 0) {
+        print(result_json );
+        result = User.fromJson(result_json['data']);
+      }
+    }else{
+      throw Exception('fail');
+    }
+    return result;
+
+  }
 }
