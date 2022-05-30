@@ -34,9 +34,9 @@ dependencies:
   #flutter_image_compress: any
   http: any
   provider: any
-  flutter_session: ^0.1.1
+  flutter_session: any
 
-  fluttertoast: ^8.0.9
+  fluttertoast: any
   #flutter_launcher_icons: any
 
 

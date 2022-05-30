@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mob_cli_for_coll_inv_num/Classes/Classes.dart';
+import 'package:mob_cli_for_coll_inv_num/Services/inv_api.dart';
 
 class CameraPage extends StatefulWidget{
   CameraPage({Key? key}) : super (key: key);
@@ -15,12 +17,22 @@ class CameraPage extends StatefulWidget{
 
 class _CameraPageState extends State<CameraPage>{
 
+  InvApi user_confirm = InvApi();
+  late Future<User> futureUser;
+
+  @override
+  void initState() {
+    super.initState();
+    futureUser = user_confirm.get_user();
+  }
+
   File? _image;
 
   Future _openCamera(ImageSource source) async{
 
     final ImagePicker _picker = ImagePicker();
     final ImageCropper _cropper = ImageCropper();
+
 
     var image = await _picker.getImage(source: source);
 
@@ -53,9 +65,37 @@ class _CameraPageState extends State<CameraPage>{
     });
   }
 
+  Future<void> presentAlert(BuildContext context, {String title = '', String message = '', Function()? ok}) {
+    return showDialog(
+        context: context,
+        builder: (c) {
+          return AlertDialog(
+            title: Text('$title'),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  child: Text('$message'),
+                )
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'OK',
+                  // style: greenText,
+                ),
+                onPressed: ok != null ? ok : Navigator.of(context).pop,
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-
+    final InvApi api = InvApi();
     return Scaffold(
       body: Center(
         child: _image == null
@@ -65,34 +105,101 @@ class _CameraPageState extends State<CameraPage>{
           height: 300,
           width: 300,
         ),
+
       ),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            FloatingActionButton.extended(
-                onPressed: () => _openCamera(ImageSource.camera),
-                heroTag: UniqueKey(),
-                label: Text('Camera'),
-                icon: Icon(Icons.camera),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
 
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            FloatingActionButton.extended(
-              onPressed: () => _openCamera(ImageSource.gallery),
-              heroTag: UniqueKey(),
-              label: Text('Gallery'),
-              icon: Icon(Icons.image),
+          FloatingActionButton.extended(
+            onPressed: () => _openCamera(ImageSource.camera),
+            heroTag: UniqueKey(),
+            label: Text('Camera'),
+            icon: Icon(Icons.camera),
 
-            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          FloatingActionButton.extended(
+            onPressed: () => _openCamera(ImageSource.gallery),
+            heroTag: UniqueKey(),
+            label: Text('Gallery'),
+            icon: Icon(Icons.image),
 
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          FutureBuilder<User>(
+            future: futureUser,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return CircularProgressIndicator();
+              } else if (snapshot.hasData) {
+                return (snapshot.data!.is_confirm==1 && _image != null
+                    ? FloatingActionButton.extended(
+                  heroTag: UniqueKey(),
+                  onPressed: () async{
+                    var responseDataHttp = await api.uploadPhotos(_image!.path);
+                    await presentAlert(context,
+                        title: 'Success HTTP',
+                        message: responseDataHttp);
 
-          ],
-        ),
+                  },
+                  label: Text('Send'),
+                  icon: Icon(Icons.send),
+                )
+                    : Text(''));
+              } else if (snapshot.hasError) {
+                return Text(
+                    '${snapshot.error}');
+              }
 
-      );
+              // By default, show a loading spinner.
+              return const CircularProgressIndicator();
+            },
+          ),
+          /*(_image != null
+              ? FloatingActionButton.extended(
+            heroTag: UniqueKey(),
+            onPressed: () async{
+              var responseDataHttp = await api.uploadPhotos(_image!.path);
+              await presentAlert(context,
+                  title: 'Success HTTP',
+                  message: responseDataHttp);
+            },
+            label: Text('Send'),
+            icon: Icon(Icons.send),
+          )
+              : Text("")
+          ),*/
 
+        ],
+      ),
+
+    );
+
+/*FutureBuilder<User>(
+      future: futureUser,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasData) {
+
+          return (snapshot.data!.is_confirm==1
+              ? _widget()
+              : Icon(Icons.cancel,
+              color: Colors.red));
+        } else if (snapshot.hasError) {
+          return Text(
+              '${snapshot.error}');
+        }
+
+        // By default, show a loading spinner.
+        return const CircularProgressIndicator();
+      },
+    );*/
 
   }
 }

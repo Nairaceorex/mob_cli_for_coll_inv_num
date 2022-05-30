@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/LandingPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/MainPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -31,6 +32,7 @@ class _RegPageState extends State<RegPage> {
       return Container(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: TextField(
+
           controller: controller,
           obscureText: obscure,
           cursorColor: Colors.white,
