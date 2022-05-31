@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mob_cli_for_coll_inv_num/Classes/Classes.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/LandingPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/MainPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mob_cli_for_coll_inv_num/Services/inv_api.dart';
+import 'package:mob_cli_for_coll_inv_num/Widgets/Companies_List.dart';
 
 class RegPage extends StatefulWidget {
   @override
@@ -19,9 +21,17 @@ class _RegPageState extends State<RegPage> {
   String? _email;
   String? _password;
   String? _nickname;
-  var _company;
+  String? _company;
 
+  InvApi api_comp = InvApi();
+  late Future<List<Company>> futureCompany;
 
+  @override
+  void initState() {
+    super.initState();
+    futureCompany = api_comp.get_companies();
+
+  }
 
   bool showLogin = false;
 
@@ -123,8 +133,49 @@ class _RegPageState extends State<RegPage> {
 
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: _input(Icon(Icons.account_balance_sharp),"Company", _companyController,false),
+                      padding: EdgeInsets.only(left: 200,bottom: 20),
+                      child: Container(
+                        height: 50,
+                        width: 161,
+                        child: FutureBuilder<List<Company>>(
+                          future: futureCompany,
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              //print(snapshot.data);
+                              return CircularProgressIndicator();
+                            } else if (snapshot.hasData) {
+
+                              return DropdownButton<String>(
+                                  hint: Text('Acc'),
+                                  value: _company,
+                                  elevation: 16,
+                                  style: const TextStyle(color: Colors.black),
+                                  underline: Container(
+                                    height: 2,
+                                    color: Colors.red,
+                                  ),
+                                  items: snapshot.data!.map((item)=>
+                                      DropdownMenuItem<String>(
+                                        child: Text(item.name),
+                                        value: item.id.toString(),
+                                      )).toList(),
+                                  //onChanged: widget.onChanged as void Function(String?),
+                                  onChanged: (val){
+                                    setState(() {
+                                      _company=val;
+                                    });
+                                  });
+                            } else if (snapshot.hasError) {
+                              return Text(
+                                  '${snapshot.error}');
+                            }
+
+                            // By default, show a loading spinner.
+                            return const CircularProgressIndicator();
+                          },
+                        ),
+                      ),
+                      //child: _input(Icon(Icons.account_balance_sharp),"Company", _companyController,false),
 
                     ),
 
@@ -159,13 +210,15 @@ class _RegPageState extends State<RegPage> {
       _email = _emailController.text;
       _password = _passwordController.text;
       _nickname = _nicknameController.text;
-      _company = _companyController.text;
+
+
+
 
       if (_email!.isEmpty || _password!.isEmpty || _company!.isEmpty || _nickname!.isEmpty) return;
 
 
       InvApi api = InvApi();
-      int res = await api.reg(_email!, _nickname!, _password!, 4);
+      int res = await api.reg(_email!, _nickname!, _password!, int.parse(_company!));
 
       if (res == 0) {
         print('Поздравляем Вы успешно прошли регистрацию');

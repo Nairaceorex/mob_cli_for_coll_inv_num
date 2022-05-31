@@ -21,7 +21,7 @@ class _ReportPageState extends State<ReportPage>{
               child: Column(
                 children: <Widget>[
                   Text('Отчет'),
-                  Companies_List()
+                  //Companies_List()
                 ],
               ),
             ),

@@ -61,22 +61,22 @@ class InvApi {
     return result;
   }
 
-  Future<List<Company>?> get_companies() async {
+  Future<List<Company>> get_companies() async {
     List<Company> result = [];
     Uri url = Uri.parse(url_api + 'get_companies');
     var response = await http.get(url);
     var result_json = json.decode(response.body);
     if (response.statusCode == 200) {
       int code = result_json['code'];
+      //print(result_json['data']);
       if (code == 0) {
         var data = result_json['data'];
-        for (var comp in data) {
-          result.add(Company(
-              id: comp['id'],
-              name: comp['name']));
+        for(var comp in data){
+          result.add(Company(id: comp['id'], name: comp['name']));
         }
       }
     }
+
     return result;
   }
 
@@ -93,7 +93,7 @@ class InvApi {
       var result_json = json.decode(response.body);
       int code = result_json['code'];
       if (code == 0) {
-        print(result_json);
+        //print(result_json);
         result = User.fromJson(result_json['data']);
       }
     } else {

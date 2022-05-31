@@ -1,7 +1,7 @@
 // for dropdownlist
 class Company {
-  int? id;
-  String? name;
+  final int id;
+  final String name;
 
   Company({required this.id, required this.name});
 
