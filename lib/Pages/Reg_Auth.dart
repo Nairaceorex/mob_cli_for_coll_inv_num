@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mob_cli_for_coll_inv_num/Classes/Classes.dart';
@@ -47,6 +48,10 @@ class _RegPageState extends State<RegPage> {
           obscureText: obscure,
           cursorColor: Colors.white,
 
+          /*inputFormatters: [
+            FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
+          ],*/
+
           style: TextStyle(fontSize: 20,color: Colors.white),
           decoration: InputDecoration(
               hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white30),
@@ -92,12 +97,12 @@ class _RegPageState extends State<RegPage> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(bottom: 20, top: 10),
-                      child: _input(Icon(Icons.email),"EMAIL", _emailController,false),
+                      child: _input(Icon(Icons.email),"Почта", _emailController,false),
 
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
-                      child: _input(Icon(Icons.lock),"PASSWORD", _passwordController,true),
+                      child: _input(Icon(Icons.lock),"Пароль", _passwordController,true),
 
                     ),
 
@@ -119,37 +124,41 @@ class _RegPageState extends State<RegPage> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(bottom: 20, top: 10),
-                      child: _input(Icon(Icons.email),"EMAIL", _emailController,false),
+                      child: _input(Icon(Icons.email),"Почта", _emailController,false),
 
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
-                      child: _input(Icon(Icons.lock),"PASSWORD", _passwordController,true),
+                      child: _input(Icon(Icons.lock),"Пароль", _passwordController,true),
 
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
-                      child: _input(Icon(Icons.account_circle),"Name", _nicknameController,false),
+                      child: _input(Icon(Icons.account_circle),"Имя", _nicknameController,false),
 
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 200,bottom: 20),
+                      padding: EdgeInsets.only(bottom: 20),
                       child: Container(
                         height: 50,
-                        width: 161,
+                        width: 181,
                         child: FutureBuilder<List<Company>>(
                           future: futureCompany,
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
                               //print(snapshot.data);
-                              return CircularProgressIndicator();
+                              return Text("Потеряно соединение",
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: Colors.red
+                              ),);
                             } else if (snapshot.hasData) {
 
                               return DropdownButton<String>(
-                                  hint: Text('Acc'),
+                                  hint: Text('Компания',style: TextStyle(color: Colors.white,fontSize: 21),),
                                   value: _company,
                                   elevation: 16,
-                                  style: const TextStyle(color: Colors.black),
+                                  //style: TextStyle(color: Colors.bl,),
                                   underline: Container(
                                     height: 2,
                                     color: Colors.red,
@@ -221,13 +230,12 @@ class _RegPageState extends State<RegPage> {
       int res = await api.reg(_email!, _nickname!, _password!, int.parse(_company!));
 
       if (res == 0) {
-        print('Поздравляем Вы успешно прошли регистрацию');
 
         InvApi api_auth = InvApi();
         int res_auth = await api_auth.login(_email!, _password!);
 
         if (res_auth == 0){
-          print('Поздравляем Вы успешно прошли авторизацию');
+          //print('Поздравляем Вы успешно прошли авторизацию');
           Fluttertoast.showToast(
               msg: "Вы успешно прошли регистрацию",
               toastLength: Toast.LENGTH_SHORT,
@@ -237,28 +245,19 @@ class _RegPageState extends State<RegPage> {
               textColor: Colors.white,
               fontSize: 16.0
           );
-
           switchLanding(context);
-
         }
       }
-      if (res == 1) {
-        print('Неизвестная ошибка');
-      }
-      if (res == 2) {
-        print('!!!!!!!!!!!!!!!!!!!!!!');
-      }
-      if (res == 3) {
-        print('Аккаунт с таким псевдонимом уже существует');
-      }
-      if (res == 4) {
-        print('Аккаунт с такой эл. почтой уже существует');
-      }
-      else{
-        print('Ошибка');
-      }
-      if(res == 0){
-
+      if (res == 2 || res == 3 || res == 4) {
+        Fluttertoast.showToast(
+            msg: "Пользователь с такими данными уже существует",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
       }
       else{
         _emailController.clear();
@@ -277,7 +276,7 @@ class _RegPageState extends State<RegPage> {
       int res_auth = await api_auth.login(_email!, _password!);
 
       if (res_auth == 0){
-        print('Поздравляем Вы успешно прошли авторизацию');
+        //print('Поздравляем Вы успешно прошли авторизацию');
         Fluttertoast.showToast(
             msg: "Вы успешно прошли авторизацию",
             toastLength: Toast.LENGTH_SHORT,
@@ -290,20 +289,17 @@ class _RegPageState extends State<RegPage> {
         switchLanding(context);
       }
       if (res_auth == 1) {
-        print('Неизвестная ошибка');
+        Fluttertoast.showToast(
+            msg: "Такого пользователя не существует",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
       }
-      if (res_auth == 2) {
-        print('!!!!!!!!!!!!!!!!!!!!!!');
-      }
-      if (res_auth == 3) {
-        print('Аккаунт с таким псевдонимом уже существует');
-      }
-      if (res_auth == 4) {
-        print('Аккаунт с такой эл. почтой уже существует');
-      }
-      else{
-        print('Ошибка');
-      }
+
     }
 
     Widget _logo(){
@@ -336,11 +332,11 @@ class _RegPageState extends State<RegPage> {
               (
                   showLogin ? Column(
                       children: <Widget>[
-                        _form("Login",_loginButtonAction),
+                        _form("Войти",_loginButtonAction),
                         Padding(
                           padding: EdgeInsets.all(10),
                           child: GestureDetector(
-                            child: Text("Register", style: TextStyle(fontSize: 20, color: Colors.white),
+                            child: Text("Регистрация", style: TextStyle(fontSize: 20, color: Colors.white),
                             ),
                             onTap:(){
                               setState((){
@@ -354,11 +350,11 @@ class _RegPageState extends State<RegPage> {
                   )
                       : Column(
                       children: <Widget>[
-                        _form("Register",_registerButtonAction),
+                        _form("Зарегистрироваться",_registerButtonAction),
                         Padding(
                           padding: EdgeInsets.all(10),
                           child: GestureDetector(
-                            child: Text("Register?", style: TextStyle(fontSize: 20, color: Colors.white),
+                            child: Text("Войти", style: TextStyle(fontSize: 20, color: Colors.white),
                             ),
                             onTap:(){
                               setState((){

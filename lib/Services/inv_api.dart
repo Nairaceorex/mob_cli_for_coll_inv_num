@@ -10,7 +10,7 @@ class InvApi {
   bool debug = false;
 
   String url_api = 'http://192.168.1.53:5000/api/';
-  String url_server = 'http://192.168.1.65:5000/';
+  //String url_server = 'http://192.168.1.53:5000/';
 
 //https://inventory-mp41-18.herokuapp.com/api/get_companies
 

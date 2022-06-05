@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                                           Column(
                                             children: [
                                               Text(
-                                                'Id',
+                                                'Номер',
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontFamily: 'Nunito',
@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                                           Column(
                                             children: [
                                               Text(
-                                                'Confirm',
+                                                'Подтверждение',
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontFamily: 'Nunito',
@@ -231,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                             height: 20,
                           ),
                           Text(
-                            'Email',
+                            'Почта',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'Nunito',
@@ -290,7 +290,7 @@ class _HomePageState extends State<HomePage> {
                             height: 10,
                           ),
                           Text(
-                            'Company',
+                            'Компания',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'Nunito',

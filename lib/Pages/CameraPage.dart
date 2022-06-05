@@ -99,7 +99,7 @@ class _CameraPageState extends State<CameraPage>{
     return Scaffold(
       body: Center(
         child: _image == null
-            ? Text('Image')
+            ? Text('Изображение')
             : Image.file(
           _image!,
           height: 300,
@@ -111,25 +111,26 @@ class _CameraPageState extends State<CameraPage>{
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
 
+
           FloatingActionButton.extended(
             onPressed: () => _openCamera(ImageSource.camera),
             heroTag: UniqueKey(),
-            label: Text('Camera'),
+            label: Text('Камера'),
             icon: Icon(Icons.camera),
 
           ),
           SizedBox(
-            width: 10,
+            width: 5,
           ),
           FloatingActionButton.extended(
             onPressed: () => _openCamera(ImageSource.gallery),
             heroTag: UniqueKey(),
-            label: Text('Gallery'),
+            label: Text('Галерея'),
             icon: Icon(Icons.image),
 
           ),
           SizedBox(
-            width: 10,
+            width: 5,
           ),
           FutureBuilder<User>(
             future: futureUser,
@@ -143,11 +144,11 @@ class _CameraPageState extends State<CameraPage>{
                   onPressed: () async{
                     var responseDataHttp = await api.uploadPhotos(_image!.path);
                     await presentAlert(context,
-                        title: 'Success HTTP',
+                        title: 'Успешно',
                         message: responseDataHttp);
 
                   },
-                  label: Text('Send'),
+                  label: Text('ОК'),
                   icon: Icon(Icons.send),
                 )
                     : Text(''));
