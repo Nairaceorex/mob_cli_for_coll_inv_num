@@ -122,4 +122,30 @@ class InvApi {
     }
     return responseString;
   }
+
+  Future<List<Report>> get_objects() async{
+    List<Report> result = [];
+    Uri url = Uri.parse(url_api + 'get_objects');
+    var response = await http.post(url, body: json
+        .encode({
+      'password': await FlutterSession().get("password"),
+      'email': await FlutterSession().get("email")
+    }),
+    );
+    if (response.statusCode == 200) {
+      var result_json = json.decode(response.body);
+      int code = result_json['code'];
+      if (code == 0) {
+        //print(result_json);
+        var data = result_json['data'];
+        for(var rep in data){
+          result.add(Report(name: rep['name'], inv_num: rep['inv_num'], datetime_inv: rep['datetime_inv']));
+        }
+        //print(result);
+      }
+    } else {
+      throw Exception('fail');
+    }
+    return result;
+  }
 }

@@ -34,3 +34,15 @@ class User {
         company: json['company']);
   }
 }
+
+class Report{
+  final String name;
+  final String inv_num;
+  final String datetime_inv;
+
+  Report({required this.name,required this.inv_num, required this.datetime_inv});
+
+  factory Report.fromJson(Map<String, dynamic> json) {
+    return new Report(name: json['name'], inv_num: json['inv_num'], datetime_inv: json['datetime_inv']);
+  }
+}

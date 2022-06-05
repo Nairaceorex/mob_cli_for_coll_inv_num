@@ -24,14 +24,21 @@ class _RegPageState extends State<RegPage> {
   String? _nickname;
   String? _company;
 
+  bool _emailerror = false;
+  bool _passworderror = false;
+  bool _nicknameerror = false;
+  bool _companyerror = false;
+
   InvApi api_comp = InvApi();
   late Future<List<Company>> futureCompany;
 
   @override
   void initState() {
+    _emailController.text="";
+    _nicknameController.text="";
+    _passwordController.text="";
     super.initState();
     futureCompany = api_comp.get_companies();
-
   }
 
   bool showLogin = false;
@@ -39,7 +46,7 @@ class _RegPageState extends State<RegPage> {
   @override
   Widget build(BuildContext context) {
 
-    Widget _input(Icon icon, String hint, TextEditingController controller, bool obscure){
+    Widget _input(Icon icon, String hint, TextEditingController controller, bool obscure, bool _currenterror){
       return Container(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: TextField(
@@ -54,6 +61,7 @@ class _RegPageState extends State<RegPage> {
 
           style: TextStyle(fontSize: 20,color: Colors.white),
           decoration: InputDecoration(
+              errorText: _currenterror? "Введите правильные данные":null,
               hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white30),
               hintText: hint,
               focusedBorder: OutlineInputBorder(
@@ -78,7 +86,54 @@ class _RegPageState extends State<RegPage> {
     Widget _button(String text, void func()){
       return ElevatedButton(
         onPressed: (){
-          func();
+          if(_emailController.text.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(_emailController.text)){
+            setState(() {
+              _emailerror=true;
+            });
+          }else{
+            setState(() {
+              _emailerror=false;
+            });
+          }
+          if(_nicknameController.text.isEmpty || !RegExp(r'^[а-я  А-Я]+$').hasMatch(_nicknameController.text)){
+            setState(() {
+              _nicknameerror=true;
+            });
+          }else{
+            setState(() {
+              _nicknameerror=false;
+            });
+          }
+          if(_passwordController.text.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(_passwordController.text)){
+            setState(() {
+              _passworderror=true;
+            });
+          }else{
+            setState(() {
+              _passworderror=false;
+            });
+          }
+          if(_company!.isEmpty){
+            Fluttertoast.showToast(
+                msg: "Выберите компанию",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+          }
+          print(_passworderror);
+          print(_nicknameerror);
+          print(_emailerror);
+          print(_company);
+          //_nicknameController.text.isEmpty || !RegExp(r'^[а-я А-Я]+$').hasMatch(_nicknameController.text) ||
+             // _passwordController.text.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(_nicknameController.text)
+          if(_passworderror == false && _nicknameerror == false && _emailerror == false && _company!.isNotEmpty){
+            func();
+          }
+
         },
         child: Text(text),
         style: ElevatedButton.styleFrom(
@@ -97,12 +152,12 @@ class _RegPageState extends State<RegPage> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(bottom: 20, top: 10),
-                      child: _input(Icon(Icons.email),"Почта", _emailController,false),
+                      child: _input(Icon(Icons.email),"Почта", _emailController,false,_emailerror),
 
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
-                      child: _input(Icon(Icons.lock),"Пароль", _passwordController,true),
+                      child: _input(Icon(Icons.lock),"Пароль", _passwordController,true,_passworderror),
 
                     ),
 
@@ -124,17 +179,17 @@ class _RegPageState extends State<RegPage> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(bottom: 20, top: 10),
-                      child: _input(Icon(Icons.email),"Почта", _emailController,false),
+                      child: _input(Icon(Icons.email),"Почта", _emailController,false,_emailerror),
 
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
-                      child: _input(Icon(Icons.lock),"Пароль", _passwordController,true),
+                      child: _input(Icon(Icons.lock),"Пароль", _passwordController,true,_passworderror),
 
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
-                      child: _input(Icon(Icons.account_circle),"Имя", _nicknameController,false),
+                      child: _input(Icon(Icons.account_circle),"Имя", _nicknameController,false,_nicknameerror),
 
                     ),
                     Padding(
