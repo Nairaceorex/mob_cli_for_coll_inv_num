@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mob_cli_for_coll_inv_num/Classes/Classes.dart';
 import 'package:mob_cli_for_coll_inv_num/Services/inv_api.dart';
-import 'package:mob_cli_for_coll_inv_num/proto/exemples.dart';
+
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
       return _user!['data']['id'];
     }*/
 
-    final user = UserProf.myUser;
+
 
     /*int id = _user['data']['id'];*/
 
