@@ -113,7 +113,7 @@ class _RegPageState extends State<RegPage> {
               _passworderror=false;
             });
           }
-          if(_company!.isEmpty){
+          /*if(_company!.isEmpty){
             Fluttertoast.showToast(
                 msg: "Выберите компанию",
                 toastLength: Toast.LENGTH_SHORT,
@@ -123,7 +123,7 @@ class _RegPageState extends State<RegPage> {
                 textColor: Colors.white,
                 fontSize: 16.0
             );
-          }
+          }*/
           print(_passworderror);
           print(_nicknameerror);
           print(_emailerror);
@@ -210,10 +210,11 @@ class _RegPageState extends State<RegPage> {
                             } else if (snapshot.hasData) {
 
                               return DropdownButton<String>(
+                                dropdownColor: Colors.deepPurpleAccent,
                                   hint: Text('Компания',style: TextStyle(color: Colors.white,fontSize: 21),),
                                   value: _company,
                                   elevation: 16,
-                                  //style: TextStyle(color: Colors.bl,),
+                                  style: TextStyle(color: Colors.white,),
                                   underline: Container(
                                     height: 2,
                                     color: Colors.red,

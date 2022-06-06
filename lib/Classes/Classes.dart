@@ -10,6 +10,8 @@ class Company {
   }
 }
 
+
+
 class User {
   final int id;
   final String fullname;

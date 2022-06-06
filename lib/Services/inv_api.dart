@@ -102,6 +102,31 @@ class InvApi {
     return result;
   }
 
+  Future<Report> get_object(var inv_num) async {
+    var result;
+    Uri url = Uri.parse(url_api + 'get_object');
+    var response = await http.post(url, body: json
+        .encode({
+      'password': await FlutterSession().get("password"),
+      'email': await FlutterSession().get("email"),
+      "inv_num": inv_num
+    }),
+    );
+    if (response.statusCode == 200) {
+      var result_json = json.decode(response.body);
+      int code = result_json['code'];
+      if (code == 0) {
+        //print(result_json);
+        print(result_json);
+        result = Report.fromJson(result_json['data']);
+
+      }
+    } else {
+      throw Exception('fail');
+    }
+    return result;
+  }
+
   Future<String> uploadPhotos(String path) async {
     Uri uri = Uri.parse(url_api + 'get_inv');
     http.MultipartRequest request = http.MultipartRequest('POST', uri);
@@ -142,6 +167,31 @@ class InvApi {
           result.add(Report(name: rep['name'], inv_num: rep['inv_num'], datetime_inv: rep['datetime_inv']));
         }
         //print(result);
+      }
+    } else {
+      throw Exception('fail');
+    }
+    return result;
+  }
+
+  Future<int> apply_inv(var inv_num) async{
+    var result;
+    Uri url = Uri.parse(url_api + 'apply_inv');
+    var response = await http.post(url, body: json
+        .encode({
+      'password': await FlutterSession().get("password"),
+      'email': await FlutterSession().get("email"),
+      "inv_num": inv_num
+    }),
+    );
+    if (response.statusCode == 200) {
+      var result_json = json.decode(response.body);
+      int code = result_json['code'];
+      if (code == 0) {
+        //print(result_json);
+        print(result_json);
+        result = code;
+
       }
     } else {
       throw Exception('fail');
