@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mob_cli_for_coll_inv_num/Classes/Classes.dart';
 import 'package:mob_cli_for_coll_inv_num/Services/inv_api.dart';
 import 'package:mob_cli_for_coll_inv_num/Widgets/EditButton.dart';
@@ -82,30 +83,61 @@ class ObjectPageState extends State<ObjectPage> {
                               Text(
                                 snapshot.data!.inv_num,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontFamily: 'Nunito',
                                     fontSize: 35),
+                              ),
+                              SizedBox(
+                                height: 10,
                               ),
                               Text(
                                 snapshot.data!.name,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontFamily: 'Nunito',
                                     fontSize: 35),
+                              ),
+                              SizedBox(
+                                height: 10,
                               ),
                               Text(
                                 snapshot.data!.datetime_inv,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontFamily: 'Nunito',
                                     fontSize: 35),
                               ),
+                              SizedBox(
+                                height: 10,
+                              ),
                               ElevatedButton(
                                   onPressed: () async{
-                                    await api_inv.apply_inv(inv_num);
-                                    Navigator.pop(context);
+                                    if(await api_inv.apply_inv(inv_num)==0){
+                                      Fluttertoast.showToast(
+                                          msg: "Подтверждено",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.green,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0
+                                      );
+                                      Navigator.pop(context);
+                                    }else{
+                                      Fluttertoast.showToast(
+                                          msg: "Ошибка",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0
+                                      );
+                                    }
+
+
                                   },
-                                  child: Text('push'),
+                                  child: Text('Подтвердить'),
                                   )
 
 

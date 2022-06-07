@@ -118,8 +118,8 @@ class _CameraPageState extends State<CameraPage>{
                 ? Text('Изображение')
                 : Image.file(
               _image!,
-              height: 300,
-              width: 300,
+              height: 200,
+              width: 250,
             ),
 
           ),
@@ -130,41 +130,55 @@ class _CameraPageState extends State<CameraPage>{
           Container(
             child: Column(
               children: [
-                TextField(
-                  controller: _numController,
-                  style: TextStyle(fontSize: 20,),
-                  decoration: InputDecoration(
-                    //errorText: _currenterror? "Введите правильные данные":null,
-                    hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white30),
-                    //hintText: hint,
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3)
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide( width: 1)
-                    ),
-                    /*prefixIcon: Padding(
-                        padding: EdgeInsets.only(left: 10, right: 30),
-                        child: IconTheme(
-                          data: IconThemeData(color: Colors.white,),
-                          child: icon,
+                FutureBuilder<User>(
+                  future: futureUser,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasData) {
+                      return (snapshot.data!.is_confirm==1 && _image != null
+                          ? Container(
+                        child: Column(
+                          children: [
+                            TextField(
+                              controller: _numController,
+                              style: TextStyle(fontSize: 20,),
+                              decoration: InputDecoration(
+                                //errorText: _currenterror? "Введите правильные данные":null,
+                                hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white30),
+                                //hintText: hint,
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 3)
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide( width: 1)
+                                ),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                _invnum=_numController.text;
+                                print(_invnum);
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ObjectPage(inv_num: _invnum,)));
+                              },
+                              child: Text('Далее'),),
+                          ],
                         ),
+                      )
+                          : Text(''));
+                    } else if (snapshot.hasError) {
+                      return Text(
+                          '${snapshot.error}');
+                    }
 
-                      )*/
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _invnum=_numController.text;
-                    print(_invnum);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ObjectPage(inv_num: _invnum,)));
-
+                    // By default, show a loading spinner.
+                    return const CircularProgressIndicator();
                   },
-                  child: Text('push'),),
+                ),
+
               ],
             ),
           ),
-          //editForm(),
         ],
       ),
       floatingActionButton: Row(

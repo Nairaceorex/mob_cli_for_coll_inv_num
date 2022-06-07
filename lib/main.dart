@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/LandingPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/MainPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/Reg_Auth.dart';
+import 'package:dcdg/dcdg.dart';
 
 void main() {
   runApp(const MyApp());

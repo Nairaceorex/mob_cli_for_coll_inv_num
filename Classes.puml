@@ -1,0 +1,243 @@
+@startuml
+set namespaceSeparator ::
+
+class "mob_cli_for_coll_inv_num::Classes::Classes.dart::Company" {
+  +int id
+  +String name
+}
+
+class "mob_cli_for_coll_inv_num::Classes::Classes.dart::User" {
+  +int id
+  +String fullname
+  +String email
+  +int is_confirm
+  +String company
+}
+
+class "mob_cli_for_coll_inv_num::Classes::Classes.dart::Report" {
+  +String name
+  +String inv_num
+  +String datetime_inv
+}
+
+class "mob_cli_for_coll_inv_num::main.dart::MyApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mob_cli_for_coll_inv_num::main.dart::MyApp"
+
+class "mob_cli_for_coll_inv_num::main.dart::MyHomePage" {
+  +String title
+  +State<MyHomePage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mob_cli_for_coll_inv_num::main.dart::MyHomePage"
+
+class "mob_cli_for_coll_inv_num::main.dart::_MyHomePageState" {
+  -int _counter
+  -void _incrementCounter()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "mob_cli_for_coll_inv_num::main.dart::_MyHomePageState"
+
+class "mob_cli_for_coll_inv_num::Pages::CameraPage.dart::CameraPage" {
+  +_CameraPageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mob_cli_for_coll_inv_num::Pages::CameraPage.dart::CameraPage"
+
+class "mob_cli_for_coll_inv_num::Pages::CameraPage.dart::_CameraPageState" {
+  -GlobalKey<FormState> _formKey
+  -dynamic _accountname
+  -dynamic _accountsummary
+  +InvApi user_confirm
+  +Future<User> futureUser
+  +InvApi api_item
+  +Future<Report> futureItem
+  -TextEditingController _numController
+  -dynamic _invnum
+  -bool _btnEnabled
+  -File? _image
+  +void initState()
+  -Future<dynamic> _openCamera()
+  +Future<void> presentAlert()
+  +Widget build()
+}
+
+"mob_cli_for_coll_inv_num::Pages::CameraPage.dart::_CameraPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"mob_cli_for_coll_inv_num::Pages::CameraPage.dart::_CameraPageState" o-- "mob_cli_for_coll_inv_num::Services::inv_api.dart::InvApi"
+"mob_cli_for_coll_inv_num::Pages::CameraPage.dart::_CameraPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"mob_cli_for_coll_inv_num::Pages::CameraPage.dart::_CameraPageState" o-- "dart::io::File"
+"flutter::src::widgets::framework.dart::State" <|-- "mob_cli_for_coll_inv_num::Pages::CameraPage.dart::_CameraPageState"
+
+class "mob_cli_for_coll_inv_num::Pages::HomePage.dart::HomePage" {
+  +_HomePageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mob_cli_for_coll_inv_num::Pages::HomePage.dart::HomePage"
+
+class "mob_cli_for_coll_inv_num::Pages::HomePage.dart::_HomePageState" {
+  +InvApi api
+  +Future<User> futureUser
+  +void initState()
+  +Widget build()
+}
+
+"mob_cli_for_coll_inv_num::Pages::HomePage.dart::_HomePageState" o-- "mob_cli_for_coll_inv_num::Services::inv_api.dart::InvApi"
+"flutter::src::widgets::framework.dart::State" <|-- "mob_cli_for_coll_inv_num::Pages::HomePage.dart::_HomePageState"
+
+class "mob_cli_for_coll_inv_num::Pages::LandingPage.dart::LandingPage" {
+  +bool isLoggedIn
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mob_cli_for_coll_inv_num::Pages::LandingPage.dart::LandingPage"
+
+class "mob_cli_for_coll_inv_num::Pages::MainPage.dart::MainPage" {
+  +State<StatefulWidget> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mob_cli_for_coll_inv_num::Pages::MainPage.dart::MainPage"
+
+class "mob_cli_for_coll_inv_num::Pages::MainPage.dart::MainPageState" {
+  +int selectedIndex
+  -Widget _myContacts
+  -Widget _myEmails
+  -Widget _myProfile
+  +void switchLanding()
+  +Widget build()
+  +Widget getBody()
+}
+
+"mob_cli_for_coll_inv_num::Pages::MainPage.dart::MainPageState" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::State" <|-- "mob_cli_for_coll_inv_num::Pages::MainPage.dart::MainPageState"
+
+class "mob_cli_for_coll_inv_num::Pages::ObjectPage.dart::ObjectPage" {
+  +String? inv_num
+  +ObjectPageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mob_cli_for_coll_inv_num::Pages::ObjectPage.dart::ObjectPage"
+
+class "mob_cli_for_coll_inv_num::Pages::ObjectPage.dart::ObjectPageState" {
+  +dynamic inv_num
+  +InvApi api_item
+  +Future<Report> futureItem
+  +void initState()
+  +Widget build()
+}
+
+"mob_cli_for_coll_inv_num::Pages::ObjectPage.dart::ObjectPageState" o-- "mob_cli_for_coll_inv_num::Services::inv_api.dart::InvApi"
+"flutter::src::widgets::framework.dart::State" <|-- "mob_cli_for_coll_inv_num::Pages::ObjectPage.dart::ObjectPageState"
+
+class "mob_cli_for_coll_inv_num::Pages::ObjectPage.dart::OperationList" {
+  +int index
+  {static} +List<OperationList> values
+  {static} +OperationList plus
+  {static} +OperationList minus
+}
+
+"mob_cli_for_coll_inv_num::Pages::ObjectPage.dart::OperationList" o-- "mob_cli_for_coll_inv_num::Pages::ObjectPage.dart::OperationList"
+"dart::core::Enum" <|-- "mob_cli_for_coll_inv_num::Pages::ObjectPage.dart::OperationList"
+
+class "mob_cli_for_coll_inv_num::Pages::Reg_Auth.dart::RegPage" {
+  +State<RegPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mob_cli_for_coll_inv_num::Pages::Reg_Auth.dart::RegPage"
+
+class "mob_cli_for_coll_inv_num::Pages::Reg_Auth.dart::_RegPageState" {
+  -TextEditingController _emailController
+  -TextEditingController _nicknameController
+  -TextEditingController _passwordController
+  -TextEditingController _companyController
+  -String? _email
+  -String? _password
+  -String? _nickname
+  -String? _company
+  -bool _emailerror
+  -bool _passworderror
+  -bool _nicknameerror
+  -bool _companyerror
+  +InvApi api_comp
+  +Future<List<Company>> futureCompany
+  +bool showLogin
+  +void initState()
+  +Widget build()
+}
+
+"mob_cli_for_coll_inv_num::Pages::Reg_Auth.dart::_RegPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"mob_cli_for_coll_inv_num::Pages::Reg_Auth.dart::_RegPageState" o-- "mob_cli_for_coll_inv_num::Services::inv_api.dart::InvApi"
+"flutter::src::widgets::framework.dart::State" <|-- "mob_cli_for_coll_inv_num::Pages::Reg_Auth.dart::_RegPageState"
+
+class "mob_cli_for_coll_inv_num::Pages::ReportPage.dart::ReportPage" {
+  +_ReportPageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mob_cli_for_coll_inv_num::Pages::ReportPage.dart::ReportPage"
+
+class "mob_cli_for_coll_inv_num::Pages::ReportPage.dart::_ReportPageState" {
+  +InvApi api_rep
+  +Future<List<Report>> futureReport
+  +void initState()
+  +Widget build()
+  +DataRow buildList()
+}
+
+"mob_cli_for_coll_inv_num::Pages::ReportPage.dart::_ReportPageState" o-- "mob_cli_for_coll_inv_num::Services::inv_api.dart::InvApi"
+"flutter::src::widgets::framework.dart::State" <|-- "mob_cli_for_coll_inv_num::Pages::ReportPage.dart::_ReportPageState"
+
+class "mob_cli_for_coll_inv_num::Services::inv_api.dart::InvApi" {
+  +String nickname
+  +String password
+  +bool debug
+  +String url_api
+  +Future<int> reg()
+  +Future<int> login()
+  +Future<List<Company>> get_companies()
+  +Future<User> get_user()
+  +Future<Report> get_object()
+  +Future<String> uploadPhotos()
+  +Future<List<Report>> get_objects()
+  +Future<int> apply_inv()
+}
+
+class "mob_cli_for_coll_inv_num::Widgets::Companies_List.dart::Companies_List" {
+  +_Companies_ListState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mob_cli_for_coll_inv_num::Widgets::Companies_List.dart::Companies_List"
+
+class "mob_cli_for_coll_inv_num::Widgets::Companies_List.dart::_Companies_ListState" {
+  -String? _selectComp
+  +InvApi api_comp
+  +Future<List<Company>> futureCompany
+  -dynamic _holder
+  +void initState()
+  +Widget build()
+}
+
+"mob_cli_for_coll_inv_num::Widgets::Companies_List.dart::_Companies_ListState" o-- "mob_cli_for_coll_inv_num::Services::inv_api.dart::InvApi"
+"flutter::src::widgets::framework.dart::State" <|-- "mob_cli_for_coll_inv_num::Widgets::Companies_List.dart::_Companies_ListState"
+
+class "mob_cli_for_coll_inv_num::Widgets::CustomButtomNavigation.dart::CustomBottomNav" {
+  +int selectedIndex
+  +dynamic Function(int) callback
+  +Widget build()
+}
+
+"mob_cli_for_coll_inv_num::Widgets::CustomButtomNavigation.dart::CustomBottomNav" o-- "null::dynamic Function(int)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mob_cli_for_coll_inv_num::Widgets::CustomButtomNavigation.dart::CustomBottomNav"
+
+class "mob_cli_for_coll_inv_num::Widgets::EditButton.dart::ButtonWidget" {
+  +String text
+  +void Function() onClicked
+  +Widget build()
+}
+
+"mob_cli_for_coll_inv_num::Widgets::EditButton.dart::ButtonWidget" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mob_cli_for_coll_inv_num::Widgets::EditButton.dart::ButtonWidget"
+
+
+@enduml

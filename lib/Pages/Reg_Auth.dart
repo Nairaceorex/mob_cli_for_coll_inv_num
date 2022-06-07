@@ -95,15 +95,6 @@ class _RegPageState extends State<RegPage> {
               _emailerror=false;
             });
           }
-          if(_nicknameController.text.isEmpty || !RegExp(r'^[а-я  А-Я]+$').hasMatch(_nicknameController.text)){
-            setState(() {
-              _nicknameerror=true;
-            });
-          }else{
-            setState(() {
-              _nicknameerror=false;
-            });
-          }
           if(_passwordController.text.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(_passwordController.text)){
             setState(() {
               _passworderror=true;
@@ -113,24 +104,14 @@ class _RegPageState extends State<RegPage> {
               _passworderror=false;
             });
           }
-          /*if(_company!.isEmpty){
-            Fluttertoast.showToast(
-                msg: "Выберите компанию",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
-                fontSize: 16.0
-            );
-          }*/
+
           print(_passworderror);
           print(_nicknameerror);
           print(_emailerror);
           print(_company);
           //_nicknameController.text.isEmpty || !RegExp(r'^[а-я А-Я]+$').hasMatch(_nicknameController.text) ||
              // _passwordController.text.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(_nicknameController.text)
-          if(_passworderror == false && _nicknameerror == false && _emailerror == false && _company!.isNotEmpty){
+          if(_passworderror == false && _nicknameerror == false && _emailerror == false){
             func();
           }
 
@@ -276,18 +257,41 @@ class _RegPageState extends State<RegPage> {
       _password = _passwordController.text;
       _nickname = _nicknameController.text;
 
-
-
+      if(_nicknameController.text.isEmpty || !RegExp(r'^[а-я  А-Я]+$').hasMatch(_nicknameController.text)){
+        setState(() {
+          _nicknameerror=true;
+        });
+      }else{
+        setState(() {
+          _nicknameerror=false;
+        });
+      }
+      /*if(_company!.isEmpty){
+        Fluttertoast.showToast(
+            msg: "Выберите компанию",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+        _companyerror=true;
+      }else{
+        _companyerror=false;
+      }*/
 
       if (_email!.isEmpty || _password!.isEmpty || _company!.isEmpty || _nickname!.isEmpty) return;
 
 
       InvApi api = InvApi();
+
       int res = await api.reg(_email!, _nickname!, _password!, int.parse(_company!));
 
       if (res == 0) {
 
         InvApi api_auth = InvApi();
+
         int res_auth = await api_auth.login(_email!, _password!);
 
         if (res_auth == 0){

@@ -9,10 +9,7 @@ class InvApi {
   String password = '';
   bool debug = false;
 
-  String url_api = 'http://192.168.1.53:5000/api/';
-  //String url_server = 'http://192.168.1.53:5000/';
-
-//https://inventory-mp41-18.herokuapp.com/api/get_companies
+  String url_api = 'http://192.168.43.35:5000/api/';
 
   Future<int> reg(String email, String nickname, String password,
       int company_id) async {
@@ -68,7 +65,6 @@ class InvApi {
     var result_json = json.decode(response.body);
     if (response.statusCode == 200) {
       int code = result_json['code'];
-      //print(result_json['data']);
       if (code == 0) {
         var data = result_json['data'];
         for(var comp in data){
@@ -93,7 +89,7 @@ class InvApi {
       var result_json = json.decode(response.body);
       int code = result_json['code'];
       if (code == 0) {
-        //print(result_json);
+
         result = User.fromJson(result_json['data']);
       }
     } else {
@@ -116,7 +112,7 @@ class InvApi {
       var result_json = json.decode(response.body);
       int code = result_json['code'];
       if (code == 0) {
-        //print(result_json);
+
         print(result_json);
         result = Report.fromJson(result_json['data']);
 
@@ -136,10 +132,6 @@ class InvApi {
     http.StreamedResponse response = await request.send();
     var responseBytes = await response.stream.toBytes();
     var responseString = utf8.decode(responseBytes);
-    /*print('\n\n');
-    print('RESPONSE WITH HTTP');
-    print(responseString);
-    print('\n\n');*/
     if(response.statusCode == 200){
       print('Image uploaded!');
     } else{
@@ -161,7 +153,7 @@ class InvApi {
       var result_json = json.decode(response.body);
       int code = result_json['code'];
       if (code == 0) {
-        //print(result_json);
+
         var data = result_json['data'];
         for(var rep in data){
           result.add(Report(name: rep['name'], inv_num: rep['inv_num'], datetime_inv: rep['datetime_inv']));
@@ -188,7 +180,7 @@ class InvApi {
       var result_json = json.decode(response.body);
       int code = result_json['code'];
       if (code == 0) {
-        //print(result_json);
+
         print(result_json);
         result = code;
 
