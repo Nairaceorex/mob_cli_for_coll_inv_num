@@ -5,7 +5,6 @@ import 'package:mob_cli_for_coll_inv_num/Pages/LandingPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/ReportPage.dart';
 import 'package:mob_cli_for_coll_inv_num/Widgets/CustomButtomNavigation.dart';
 
-
 class MainPage extends StatefulWidget {
   MainPage({Key? key}) : super(key: key);
 
@@ -13,7 +12,6 @@ class MainPage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return MainPageState();
   }
-
 }
 
 class MainPageState extends State<MainPage> {
@@ -23,7 +21,7 @@ class MainPageState extends State<MainPage> {
   Widget _myProfile = ReportPage();
 
   @override
-
+  //Функция выхода из учетной записи
   void switchLanding(BuildContext ctx) {
     Navigator.pushAndRemoveUntil(ctx,
         MaterialPageRoute(builder: (_) => LandingPage(isLoggedIn: false)),(route)=>false);
@@ -51,10 +49,9 @@ class MainPageState extends State<MainPage> {
               () => this.selectedIndex = newIndex,
         ),
       ),
-
     );
   }
-
+  //Настройка нижней панели навигации
   Widget getBody( )  {
     if(this.selectedIndex == 0) {
       return this._myContacts;
@@ -64,6 +61,4 @@ class MainPageState extends State<MainPage> {
       return this._myProfile;
     }
   }
-
-
 }

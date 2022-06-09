@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomBottomNav extends StatelessWidget {
-  CustomBottomNav({required this.selectedIndex, required this.callback});
+  CustomBottomNav({required this.selectedIndex, required this.callback});// Нижняя навигационная панель выводит определенное окно в зависимости от индекса BottomNavigationBarItem и передаваемого ей окна
 
   final int selectedIndex;
   final Function(int) callback;

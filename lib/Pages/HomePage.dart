@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mob_cli_for_coll_inv_num/Classes/Classes.dart';
 import 'package:mob_cli_for_coll_inv_num/Services/inv_api.dart';
 
-
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -24,17 +20,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    /*Future<Map<String,dynamic>?> _get_id() async{
-      InvApi api = InvApi();
-      //Map<String, dynamic>? _user = await api.get_user();
-
-      return _user!['data']['id'];
-    }*/
-
-
-
-    /*int id = _user['data']['id'];*/
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -70,13 +55,6 @@ class _HomePageState extends State<HomePage> {
                                       SizedBox(
                                         height: 30,
                                       ),
-                                      /*Text(
-                                        user.fullname,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Nunito',
-                                            fontSize: 35),
-                                      ),*/
                                       FutureBuilder<User>(
                                         future: futureUser,
                                         builder: (context, snapshot) {
@@ -95,8 +73,6 @@ class _HomePageState extends State<HomePage> {
                                             return Text(
                                                 '${snapshot.error}');
                                           }
-
-                                          // By default, show a loading spinner.
                                           return const CircularProgressIndicator();
                                         },
                                       ),
@@ -116,6 +92,7 @@ class _HomePageState extends State<HomePage> {
                                                     fontFamily: 'Nunito',
                                                     fontSize: 25),
                                               ),
+                                              //Виджет, который строит себя на основе последнего снимка взаимодействия с будущим.
                                               FutureBuilder<User>(
                                                 future: futureUser,
                                                 builder: (context, snapshot) {
@@ -134,8 +111,6 @@ class _HomePageState extends State<HomePage> {
                                                     return Text(
                                                         '${snapshot.error}');
                                                   }
-
-                                                  // By default, show a loading spinner.
                                                   return const CircularProgressIndicator();
                                                 },
                                               ),
@@ -181,12 +156,9 @@ class _HomePageState extends State<HomePage> {
                                                     return Text(
                                                         '${snapshot.error}');
                                                   }
-
-                                                  // By default, show a loading spinner.
                                                   return const CircularProgressIndicator();
                                                 },
                                               ),
-
                                             ],
                                           ),
                                         ],
@@ -252,13 +224,6 @@ class _HomePageState extends State<HomePage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  /*Text(
-                                    user.email,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Nunito',
-                                        fontSize: 23),
-                                  ),*/
                                   FutureBuilder<User>(
                                     future: futureUser,
                                     builder: (context, snapshot) {
@@ -277,8 +242,6 @@ class _HomePageState extends State<HomePage> {
                                         return Text(
                                             '${snapshot.error}');
                                       }
-
-                                      // By default, show a loading spinner.
                                       return const CircularProgressIndicator();
                                     },
                                   ),
@@ -311,13 +274,6 @@ class _HomePageState extends State<HomePage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                 /*Text(
-                                    user.company,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Nunito',
-                                        fontSize: 23),
-                                  ),*/
                                   FutureBuilder<User>(
                                     future: futureUser,
                                     builder: (context, snapshot) {
@@ -336,8 +292,6 @@ class _HomePageState extends State<HomePage> {
                                         return Text(
                                             '${snapshot.error}');
                                       }
-
-                                      // By default, show a loading spinner.
                                       return const CircularProgressIndicator();
                                     },
                                   ),

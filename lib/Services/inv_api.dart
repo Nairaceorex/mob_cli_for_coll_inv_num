@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:mob_cli_for_coll_inv_num/Classes/Classes.dart';
 import 'package:flutter_session/flutter_session.dart';
@@ -7,9 +6,8 @@ import 'package:flutter_session/flutter_session.dart';
 class InvApi {
   String nickname = '';
   String password = '';
-  bool debug = false;
 
-  String url_api = 'http://192.168.43.35:5000/api/';
+  String url_api = 'http://192.168.1.53:5000/api/';
 
   Future<int> reg(String email, String nickname, String password,
       int company_id) async {
@@ -39,6 +37,7 @@ class InvApi {
   }
 
   Future<int> login(String email, String password) async {
+
     int result = 0;
     Uri url = Uri.parse(url_api + 'auth');
     var response = await http.post(
@@ -112,10 +111,7 @@ class InvApi {
       var result_json = json.decode(response.body);
       int code = result_json['code'];
       if (code == 0) {
-
-        print(result_json);
         result = Report.fromJson(result_json['data']);
-
       }
     } else {
       throw Exception('fail');
@@ -132,11 +128,7 @@ class InvApi {
     http.StreamedResponse response = await request.send();
     var responseBytes = await response.stream.toBytes();
     var responseString = utf8.decode(responseBytes);
-    if(response.statusCode == 200){
-      print('Image uploaded!');
-    } else{
-      print('Image not uploaded');
-    }
+
     return responseString;
   }
 
@@ -158,7 +150,6 @@ class InvApi {
         for(var rep in data){
           result.add(Report(name: rep['name'], inv_num: rep['inv_num'], datetime_inv: rep['datetime_inv']));
         }
-        //print(result);
       }
     } else {
       throw Exception('fail');
@@ -180,10 +171,7 @@ class InvApi {
       var result_json = json.decode(response.body);
       int code = result_json['code'];
       if (code == 0) {
-
-        print(result_json);
         result = code;
-
       }
     } else {
       throw Exception('fail');

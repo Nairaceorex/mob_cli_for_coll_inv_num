@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:mob_cli_for_coll_inv_num/Classes/Classes.dart';
 import 'package:mob_cli_for_coll_inv_num/Services/inv_api.dart';
-import 'package:mob_cli_for_coll_inv_num/Widgets/Companies_List.dart';
 
 class ReportPage extends StatefulWidget{
   ReportPage({Key? key}) : super (key: key);
@@ -18,14 +16,12 @@ class _ReportPageState extends State<ReportPage>{
   void initState() {
     super.initState();
     futureReport = api_rep.get_objects();
-    print(futureReport);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body: FutureBuilder<List<Report>>(
+      body: FutureBuilder<List<Report>>( //Вывод данныхо всех предметах компании в виде строк таблицы
         future: futureReport,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -73,94 +69,9 @@ class _ReportPageState extends State<ReportPage>{
             return Text(
                 '${snapshot.error}');
           }
-
-          // By default, show a loading spinner.
           return const CircularProgressIndicator();
         },
       ),
     );
-  }
-  DataRow buildList(data, g, snapshot) {
-    var docs = snapshot.data.docs;
-    final acc = docs[g].data()!;
-    /*List<String> wasd = <String>[];
-    for(int i=0; i < wasd.length; i++){
-      wasd.insert(i, acc['summary'].toString());
-
-    }*/
-    //print(wasd.runtimeType);
-    //print("${acc['name'].runtimeType}");
-    //wasd.clear();
-
-    //wasd.insert(wasd.length, acc['summary'].toString());
-    /*print(wasd.length);
-    print(wasd);*/
-    /*for(int i=0; i < wasd.length; i++){
-      print(wasd[i]);
-    }*/
-    return DataRow(cells: [
-
-      DataCell(Text(acc['name'])),
-      DataCell(Text(acc['name'])),
-      DataCell(Text(acc['name'])),
-
-
-    ]);
-    /*if (acc['user_uid'] == FirebaseAuth.instance.currentUser!.uid){
-      return DataRow(cells: [
-
-      DataCell(Text(acc['name'])),
-      DataCell(Text("${acc['summary']}")),
-
-    ]);
-    }
-    else{
-      print('error');
-    }
-*/
-    /*return DataRow(
-        cells: [
-          DataCell(
-            Container(
-              width: 25,
-            )
-          ),
-          DataCell(
-              Container(
-                width: 25,
-              )
-          )
-        ]);*/
-
-    /*return DataRow(cells: [
-
-      DataCell(Text(
-          acc['user_uid'] == FirebaseAuth.instance.currentUser!.uid
-              ? acc['name']: null)
-      ),
-      DataCell(Text(
-          acc['user_uid'] == FirebaseAuth.instance.currentUser!.uid
-              ? "${acc['summary']}" : "")
-      ),
-
-    ]);*/
-    /*return DataRow(cells: [
-
-      DataCell(Text(
-          acc['user_uid'] == FirebaseAuth.instance.currentUser!.uid
-              ? acc['name']: "")
-      ),
-      DataCell(Text(
-          acc['user_uid'] == FirebaseAuth.instance.currentUser!.uid
-              ? "${acc['summary']}" : "")
-      ),
-
-    ]);*/
-    /*return DataRow(cells: [
-
-      DataCell(Text(data.docs[i]['name'])),
-      DataCell(Text("${data.docs[i]['summary']}")),
-
-    ]);*/
   }
 }

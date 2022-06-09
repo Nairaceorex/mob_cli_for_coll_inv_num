@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mob_cli_for_coll_inv_num/Classes/Classes.dart';
 import 'package:mob_cli_for_coll_inv_num/Pages/LandingPage.dart';
-import 'package:mob_cli_for_coll_inv_num/Pages/MainPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mob_cli_for_coll_inv_num/Services/inv_api.dart';
-import 'package:mob_cli_for_coll_inv_num/Widgets/Companies_List.dart';
+
 
 class RegPage extends StatefulWidget {
   @override
@@ -17,7 +15,6 @@ class _RegPageState extends State<RegPage> {
   final _emailController = TextEditingController();
   final _nicknameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _companyController = TextEditingController();
 
   String? _email;
   String? _password;
@@ -27,7 +24,6 @@ class _RegPageState extends State<RegPage> {
   bool _emailerror = false;
   bool _passworderror = false;
   bool _nicknameerror = false;
-  bool _companyerror = false;
 
   InvApi api_comp = InvApi();
   late Future<List<Company>> futureCompany;
@@ -43,9 +39,10 @@ class _RegPageState extends State<RegPage> {
 
   bool showLogin = false;
 
+  //Дескриптор расположения виджета в дереве виджетов
   @override
   Widget build(BuildContext context) {
-
+    //Родительский виджет поля ввода
     Widget _input(Icon icon, String hint, TextEditingController controller, bool obscure, bool _currenterror){
       return Container(
         padding: EdgeInsets.only(left: 20, right: 20),
@@ -54,10 +51,6 @@ class _RegPageState extends State<RegPage> {
           controller: controller,
           obscureText: obscure,
           cursorColor: Colors.white,
-
-          /*inputFormatters: [
-            FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
-          ],*/
 
           style: TextStyle(fontSize: 20,color: Colors.white),
           decoration: InputDecoration(
@@ -76,13 +69,12 @@ class _RegPageState extends State<RegPage> {
                   data: IconThemeData(color: Colors.white,),
                   child: icon,
                 ),
-
               )
           ),
         ),
       );
     }
-
+    //Родительский виджет кнопки
     Widget _button(String text, void func()){
       return ElevatedButton(
         onPressed: (){
@@ -105,12 +97,6 @@ class _RegPageState extends State<RegPage> {
             });
           }
 
-          print(_passworderror);
-          print(_nicknameerror);
-          print(_emailerror);
-          print(_company);
-          //_nicknameController.text.isEmpty || !RegExp(r'^[а-я А-Я]+$').hasMatch(_nicknameController.text) ||
-             // _passwordController.text.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(_nicknameController.text)
           if(_passworderror == false && _nicknameerror == false && _emailerror == false){
             func();
           }
@@ -123,7 +109,7 @@ class _RegPageState extends State<RegPage> {
         ),
       );
     }
-
+    //Родительский виджет формы
     Widget _form(String label, void func()){
       return Container(
         child: Column(
@@ -182,7 +168,6 @@ class _RegPageState extends State<RegPage> {
                           future: futureCompany,
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
-                              //print(snapshot.data);
                               return Text("Потеряно соединение",
                               style: TextStyle(
                                 fontSize: 19,
@@ -205,7 +190,6 @@ class _RegPageState extends State<RegPage> {
                                         child: Text(item.name),
                                         value: item.id.toString(),
                                       )).toList(),
-                                  //onChanged: widget.onChanged as void Function(String?),
                                   onChanged: (val){
                                     setState(() {
                                       _company=val;
@@ -215,14 +199,10 @@ class _RegPageState extends State<RegPage> {
                               return Text(
                                   '${snapshot.error}');
                             }
-
-                            // By default, show a loading spinner.
                             return const CircularProgressIndicator();
                           },
                         ),
                       ),
-                      //child: _input(Icon(Icons.account_balance_sharp),"Company", _companyController,false),
-
                     ),
 
                     SizedBox(height: 20,),
@@ -240,18 +220,17 @@ class _RegPageState extends State<RegPage> {
                   ],
                 )
             ),
-
           ],
         ),
       );
     }
-
+    //Функция пререключения страниц
     void switchLanding(BuildContext ctx) {
       Navigator.pushAndRemoveUntil(ctx,
           MaterialPageRoute(builder: (_) => LandingPage(isLoggedIn: true)),(route)=>false);
 
     }
-
+    //Функция кнопки регистрации
     void _registerButtonAction() async{
       _email = _emailController.text;
       _password = _passwordController.text;
@@ -266,36 +245,19 @@ class _RegPageState extends State<RegPage> {
           _nicknameerror=false;
         });
       }
-      /*if(_company!.isEmpty){
-        Fluttertoast.showToast(
-            msg: "Выберите компанию",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0
-        );
-        _companyerror=true;
-      }else{
-        _companyerror=false;
-      }*/
 
       if (_email!.isEmpty || _password!.isEmpty || _company!.isEmpty || _nickname!.isEmpty) return;
 
-
       InvApi api = InvApi();
-
       int res = await api.reg(_email!, _nickname!, _password!, int.parse(_company!));
 
       if (res == 0) {
 
         InvApi api_auth = InvApi();
-
         int res_auth = await api_auth.login(_email!, _password!);
 
         if (res_auth == 0){
-          //print('Поздравляем Вы успешно прошли авторизацию');
+
           Fluttertoast.showToast(
               msg: "Вы успешно прошли регистрацию",
               toastLength: Toast.LENGTH_SHORT,
@@ -324,19 +286,18 @@ class _RegPageState extends State<RegPage> {
         _passwordController.clear();
       }
     }
-
+    //Функция кнопки аутентификации
     void _loginButtonAction() async{
       _password = _passwordController.text;
       _email = _emailController.text;
 
       if (_email!.isEmpty || _password!.isEmpty) return;
 
-
       InvApi api_auth = InvApi();
       int res_auth = await api_auth.login(_email!, _password!);
 
       if (res_auth == 0){
-        //print('Поздравляем Вы успешно прошли авторизацию');
+
         Fluttertoast.showToast(
             msg: "Вы успешно прошли авторизацию",
             toastLength: Toast.LENGTH_SHORT,
@@ -347,8 +308,7 @@ class _RegPageState extends State<RegPage> {
             fontSize: 16.0
         );
         switchLanding(context);
-      }
-      if (res_auth == 1) {
+      }else if (res_auth == 1) {
         Fluttertoast.showToast(
             msg: "Такого пользователя не существует",
             toastLength: Toast.LENGTH_SHORT,
@@ -359,9 +319,8 @@ class _RegPageState extends State<RegPage> {
             fontSize: 16.0
         );
       }
-
     }
-
+    //Родительский виджет логотипа
     Widget _logo(){
       return Padding(
         padding: EdgeInsets.only(top:100),
@@ -380,7 +339,6 @@ class _RegPageState extends State<RegPage> {
 
       );
     }
-
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
@@ -401,7 +359,6 @@ class _RegPageState extends State<RegPage> {
                             onTap:(){
                               setState((){
                                 showLogin = false;
-
                               });
                             },
                           ),
@@ -426,13 +383,10 @@ class _RegPageState extends State<RegPage> {
                       ]
                   )
               ),
-
-
             ],
           ),
         ],
       ),
-
     );
   }
 }

@@ -1,4 +1,4 @@
-// for dropdownlist
+// Класс Компания
 class Company {
   final int id;
   final String name;
@@ -10,8 +10,7 @@ class Company {
   }
 }
 
-
-
+// Класс Пользователь
 class User {
   final int id;
   final String fullname;
@@ -37,6 +36,7 @@ class User {
   }
 }
 
+// Класс Отчет
 class Report{
   final String name;
   final String inv_num;
