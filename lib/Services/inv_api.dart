@@ -7,7 +7,7 @@ class InvApi {
   String nickname = '';
   String password = '';
 
-  String url_api = 'http://192.168.1.53:5000/api/';
+  String url_api = 'http://192.168.43.35:5000/api/';
 
   Future<int> reg(String email, String nickname, String password,
       int company_id) async {
